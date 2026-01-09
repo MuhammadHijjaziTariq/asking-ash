@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For Ash ❤️</title>
+    <style>
+        body {
+            background-color: #ffeef2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 350px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        #valentine-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2);
+        }
+
+        /* This is the cute heart icon that won't break */
+        .heart-icon {
+            font-size: 80px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.4rem;
+            line-height: 1.4;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            min-height: 50px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #yesButton {
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        #noButton {
+            background-color: #adb5bd;
+            color: white;
+            position: absolute;
+            white-space: nowrap;
+        }
+
+        .celebration {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="valentine-card">
+            <div id="image-container">
+                <div class="heart-icon" id="main-emoji">❤️</div>
+            </div>
+            
+            <h1 id="question">Ayesha, will you be my Valentine?</h1>
+            
+            <div class="buttons" id="button-group">
+                <button id="yesButton" onclick="accept()">Yes!</button>
+                <button id="noButton" ontouchstart="moveButton()" onmouseover="moveButton()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const noButton = document.getElementById('noButton');
+        const question = document.getElementById('question');
+        const mainEmoji = document.getElementById('main-emoji');
+        const card = document.getElementById('valentine-card');
+
+        function moveButton() {
+            // Limits the movement to stay within the viewport visible to Ash
+            const padding = 50;
+            const maxX = window.innerWidth - noButton.offsetWidth - padding;
+            const maxY = window.innerHeight - noButton.offsetHeight - padding;
+            
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+        }
+
+        function accept() {
+            // Update Text
+            question.innerHTML = "Yay! See you on the 14th, Ash! 🥰";
+            question.style.color = "#ff4d6d";
+            
+            // Update Emoji (instead of risky GIF links)
+            mainEmoji.innerHTML = "💖";
+            mainEmoji.style.animation = "pulse 0.5s infinite";
+            
+            // UI Cleanup
+            noButton.style.display = 'none';
+            document.getElementById('yesButton').style.display = 'none';
+            document.body.style.backgroundColor = "#ffb3c1";
+            
+            // Add a little extra sparkle
+            createHearts();
+        }
+
+        // Simple heart "confetti" effect
+        function createHearts() {
+            for(let i=0; i<20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100vh';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    heart.style.transition = 'all 3s linear';
+                    heart.style.zIndex = '0';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.style.top = '-10vh';
+                        heart.style.opacity = '0';
+                    }, 100);
+                }, i * 150);
+            }
+        }
+    </script>
+</body>
+</html>
