@@ -12,7 +12,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
             touch-action: manipulation;
         }
@@ -21,43 +21,35 @@
             width: 85%;
             max-width: 350px;
             text-align: center;
-            z-index: 1;
         }
 
-        #valentine-card {
+        #card {
             background: white;
             padding: 30px 20px;
             border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
 
-        /* This is the cute heart icon that won't break */
-        .heart-icon {
-            font-size: 80px;
-            margin-bottom: 10px;
-            display: inline-block;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        #icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
         }
 
         h1 {
             color: #d63384;
             font-size: 1.4rem;
-            line-height: 1.4;
             margin-bottom: 30px;
+            min-height: 60px;
         }
 
         .buttons {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 15px;
-            min-height: 50px;
         }
 
         button {
@@ -67,101 +59,99 @@
             border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease-in-out;
         }
 
-        #yesButton {
-            background-color: #ff4d6d;
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        #yesBtn { 
+            background-color: #ff4d6d; 
+            color: white; 
+            z-index: 100;
         }
-
-        #noButton {
+        
+        #noBtn {
             background-color: #adb5bd;
             color: white;
-            position: absolute;
-            white-space: nowrap;
-        }
-
-        .celebration {
-            display: none;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div id="valentine-card">
-            <div id="image-container">
-                <div class="heart-icon" id="main-emoji">❤️</div>
-            </div>
-            
-            <h1 id="question">Ayesha, will you be my Valentine?</h1>
-            
-            <div class="buttons" id="button-group">
-                <button id="yesButton" onclick="accept()">Yes!</button>
-                <button id="noButton" ontouchstart="moveButton()" onmouseover="moveButton()">No</button>
+        <div id="card">
+            <div id="icon">❤️</div>
+            <h1 id="text">Ayesha, will you be my Valentine?</h1>
+            <div class="buttons">
+                <button id="yesBtn" onclick="celebrate()">Yes!</button>
+                <button id="noBtn" onclick="handleNo()">No</button>
             </div>
         </div>
     </div>
 
     <script>
-        const noButton = document.getElementById('noButton');
-        const question = document.getElementById('question');
-        const mainEmoji = document.getElementById('main-emoji');
-        const card = document.getElementById('valentine-card');
+        let noCount = 0;
+        let yesSize = 1;
+        
+        const phrases = [
+            "Are you sure, Ash? 🥺",
+            "Think again... 🧐",
+            "Really sure? 💔",
+            "Don't do this to me! 😭",
+            "I'm gonna cry... 🥺",
+            "You're breaking my heart! 💔",
+            "Ash, please? ❤️"
+        ];
 
-        function moveButton() {
-            // Limits the movement to stay within the viewport visible to Ash
-            const padding = 50;
-            const maxX = window.innerWidth - noButton.offsetWidth - padding;
-            const maxY = window.innerHeight - noButton.offsetHeight - padding;
+        function handleNo() {
+            const yesBtn = document.getElementById('yesBtn');
+            const text = document.getElementById('text');
+            const icon = document.getElementById('icon');
+
+            // 1. Change the text
+            text.innerHTML = phrases[noCount % phrases.length];
+            noCount++;
+
+            // 2. Make the Yes button bigger
+            yesSize += 0.4; // Increases size by 40% each click
+            yesBtn.style.transform = `scale(${yesSize})`;
             
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
-            
-            noButton.style.left = randomX + 'px';
-            noButton.style.top = randomY + 'px';
+            // 3. Optional: Make the icon sadder
+            if(noCount > 2) icon.innerHTML = "😢";
+            if(noCount > 5) icon.innerHTML = "😭";
         }
 
-        function accept() {
-            // Update Text
-            question.innerHTML = "Yay! See you on the 14th, Ash! 🥰";
-            question.style.color = "#ff4d6d";
-            
-            // Update Emoji (instead of risky GIF links)
-            mainEmoji.innerHTML = "💖";
-            mainEmoji.style.animation = "pulse 0.5s infinite";
-            
-            // UI Cleanup
-            noButton.style.display = 'none';
-            document.getElementById('yesButton').style.display = 'none';
+        function celebrate() {
+            const card = document.getElementById('card');
+            document.getElementById('text').innerHTML = "Yay! See you on the 14th, Ash! 🥰";
+            document.getElementById('icon').innerHTML = "💖";
+            document.getElementById('noBtn').style.display = 'none';
+            document.getElementById('yesBtn').style.transform = "scale(1)";
+            document.getElementById('yesBtn').innerHTML = "I Knew It! ❤️";
             document.body.style.backgroundColor = "#ffb3c1";
             
-            // Add a little extra sparkle
-            createHearts();
+            // Floating hearts
+            for (let i = 0; i < 20; i++) {
+                setTimeout(createHeart, i * 100);
+            }
         }
 
-        // Simple heart "confetti" effect
-        function createHearts() {
-            for(let i=0; i<20; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.innerHTML = '❤️';
-                    heart.style.position = 'fixed';
-                    heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.top = '100vh';
-                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                    heart.style.transition = 'all 3s linear';
-                    heart.style.zIndex = '0';
-                    document.body.appendChild(heart);
-                    
-                    setTimeout(() => {
-                        heart.style.top = '-10vh';
-                        heart.style.opacity = '0';
-                    }, 100);
-                }, i * 150);
-            }
+        function createHeart() {
+            const h = document.createElement('div');
+            h.innerHTML = '❤️';
+            h.style.position = 'fixed';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.bottom = '-5vh';
+            h.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            h.style.transition = 'transform 3s linear, opacity 3s';
+            h.style.pointerEvents = 'none';
+            document.body.appendChild(h);
+            
+            setTimeout(() => {
+                h.style.transform = `translateY(-110vh) rotate(${Math.random() * 360}deg)`;
+                h.style.opacity = '0';
+            }, 100);
+            
+            setTimeout(() => h.remove(), 4000);
         }
     </script>
 </body>
