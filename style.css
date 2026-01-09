@@ -6,52 +6,60 @@ body {
     height: 100vh;
     margin: 0;
     font-family: 'Arial', sans-serif;
-    overflow: hidden;
+    overflow: hidden; /* Prevents scrolling when the button moves */
+    touch-action: manipulation; /* Improves mobile tap response */
 }
 
 .container {
+    width: 90%;
+    max-width: 400px;
     text-align: center;
 }
 
 #valentine-card {
     background: white;
-    padding: 40px;
+    padding: 30px 20px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 h1 {
     color: #d63384;
-    margin-bottom: 30px;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
 }
 
 img {
-    width: 200px;
+    width: 150px;
+    height: auto;
     margin-bottom: 20px;
 }
 
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
+    height: 60px; /* Space for the buttons */
 }
 
 button {
-    padding: 15px 30px;
-    font-size: 1.2rem;
+    padding: 12px 25px;
+    font-size: 1.1rem;
     border: none;
-    border-radius: 10px;
+    border-radius: 50px; /* Rounded pill shape looks better on mobile */
+    font-weight: bold;
     cursor: pointer;
-    transition: transform 0.2s;
 }
 
 #yesButton {
     background-color: #ff4d6d;
     color: white;
+    z-index: 10;
 }
 
 #noButton {
     background-color: #adb5bd;
     color: white;
-    position: absolute; /* Needed for the movement effect */
+    position: absolute; /* Allows it to jump around the screen */
+    transition: 0.1s ease;
 }
