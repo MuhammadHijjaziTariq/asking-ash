@@ -27,9 +27,10 @@ noButton.addEventListener('mouseover', moveButton);
 // Success Action
 yesButton.addEventListener('click', () => {
     question.innerHTML = "Yay! See you on the 14th, Ash! 🥰";
-    mainGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzhic3R6Zzhic3R6Zzhic3R6Zzhic3R6Zzhic3R6Zzhic3R6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/Iatj86iaB7H68/giphy.gif";
-    noButton.style.display = 'none';
     
-    // Optional: Add a little confetti feel by changing background
+    // Using a new, high-reliability link for the happy dance
+    mainGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3Ym9qZzR3NXF3ZzR3NXF3ZzR3NXF3ZzR3NXF3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/3ov9jS69oDliisLpMA/giphy.gif";
+    
+    noButton.style.display = 'none';
     document.body.style.backgroundColor = "#ffb3c1";
 });
