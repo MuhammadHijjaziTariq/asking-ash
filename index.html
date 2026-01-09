@@ -120,20 +120,27 @@
             if(noCount > 5) icon.innerHTML = "😭";
         }
 
-        function celebrate() {
-            const card = document.getElementById('card');
-            document.getElementById('text').innerHTML = "Yay! See you on the 14th, Ash! 🥰";
-            document.getElementById('icon').innerHTML = "💖";
-            document.getElementById('noBtn').style.display = 'none';
-            document.getElementById('yesBtn').style.transform = "scale(1)";
-            document.getElementById('yesBtn').innerHTML = "I Knew It! ❤️";
-            document.body.style.backgroundColor = "#ffb3c1";
-            
-            // Floating hearts
-            for (let i = 0; i < 20; i++) {
-                setTimeout(createHeart, i * 100);
-            }
-        }
+function celebrate() {
+    const text = document.getElementById('text');
+    const icon = document.getElementById('icon');
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+
+    text.innerHTML = "Yay! See you on the 14th, Ash! 🥰";
+    
+    // This replaces the heart icon with a cute jumping GIF
+    icon.innerHTML = `<img src="1.gif" alt="Happy" style="width: 140px; border-radius: 10px;">`;
+    
+    noBtn.style.display = 'none';
+    yesBtn.style.transform = "scale(1)";
+    yesBtn.innerHTML = "I Knew It! ❤️";
+    document.body.style.backgroundColor = "#ffb3c1";
+    
+    // Start floating hearts
+    for (let i = 0; i < 20; i++) {
+        setTimeout(createHeart, i * 100);
+    }
+}
 
         function createHeart() {
             const h = document.createElement('div');
